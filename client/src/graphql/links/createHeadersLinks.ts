@@ -10,7 +10,7 @@ export const createHeadersLink = () =>
     if (store) {
       const state = store.getState();
 
-      jwt = state.app.user?.jwt;
+      jwt = state.app.jwt;
     }
 
     const headers = {
@@ -18,7 +18,7 @@ export const createHeadersLink = () =>
     };
 
     if (jwt) {
-      headers.authorization = `Bearer ${jwt}`;
+      headers.authorization = jwt;
     } else {
       delete headers.authorization;
     }
