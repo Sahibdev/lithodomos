@@ -18,7 +18,7 @@ export async function purchased(
   const user = await ctx.db.User.findOne(
     {
       _id: userObjID,
-      purchaseTourIDs: parent._id,
+      purchasedTourIDs: parent._id,
     },
     ctx,
   );

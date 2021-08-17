@@ -23,7 +23,8 @@ export async function purchaseTours(
 ): Promise<PurchaseToursResponse> {
   const userIDStr = ctx.user?.id;
 
-  // sanity check
+  console.log('ctx.user:', ctx.user);
+
   if (!userIDStr) {
     return {
       purchasedTours: null,
@@ -50,7 +51,7 @@ export async function purchaseTours(
       userObjID,
       {
         $addToSet: {
-          purchasedTours: tours.map(t => t._id),
+          purchasedTourIDs: tours.map(t => t._id),
         },
       },
       ctx,
