@@ -1,11 +1,17 @@
 import { Store } from "redux";
-import { RootState } from "./types";
+import { History } from "history";
+import { RootState, SagasContext } from "./types";
 import { createReduxStore } from "./createReduxStore";
 
 let _store: Store<RootState> | null = null;
 
-export function createStore() {
-  const { store, persistor } = createReduxStore();
+export function createStore(history: History) {
+  const context: SagasContext = {
+    // @ts-ignore
+    history,
+  };
+
+  const { store, persistor } = createReduxStore(context);
 
   _store = store;
 

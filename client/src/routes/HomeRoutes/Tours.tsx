@@ -9,7 +9,6 @@ const GET_TOURS = gql`
       tours {
         id
         name
-        name
         priceUSDCents
         thumbnailURL
         purchased
@@ -28,11 +27,11 @@ export const Tours: React.FC = () => {
   } else if (error) {
     result = <p>Error: {error?.message || "Unknown"}</p>;
   } else {
-    const tours = data?.result || [];
+    const tours = data?.result?.tours || [];
 
     result = (
       <>
-        <h1>Tasks</h1>
+        <h1>Challenge 1</h1>
         <p>Display the all tours in the library as a grid of cards.</p>
         <p>- Design a card for the tour.</p>
         <p>
@@ -40,9 +39,7 @@ export const Tours: React.FC = () => {
           in USD and a button to purchase.
         </p>
         <p>
-          - Add purchase button should call the purchaseTours mutation. (It
-          simply associates the tour with the user account. There is no cart or
-          checkout or payments.)
+          - Clicking the purchase button should call the <strong>purchaseTours</strong> mutation passing the relevant purchaseID. (Take a look at the `api\src\graphql\mutations\Tour\purchaseTours.js` file to see what happens when the mutation is called.)
         </p>
         <p>
           - Once a purchase is made, it should be reflected on the tour card and

@@ -15,3 +15,12 @@ export type ReduxInstance = {
 export const initialState: RootState = {
   app: initialAppState
 };
+
+
+export enum SagaContextKeys {
+  history = 'history',
+}
+
+export type SagasContext = {
+  [SagaContextKeys.history]: History;
+};

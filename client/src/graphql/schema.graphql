@@ -1,0 +1,207 @@
+""""""
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+""""""
+type Query {
+  """
+  TODO add explanation
+  dummy resolver to allow empty type
+  """
+  _: Boolean
+
+  """"""
+  getTour(input: GetTourInput!): Tour
+
+  """"""
+  getTours(input: GetToursInput!): GetToursResponse!
+
+  """"""
+  getCurrentUser(input: GetCurrentUserInput!): User
+}
+
+""""""
+input GetTourInput {
+  """"""
+  tourID: ID!
+}
+
+""""""
+type Tour {
+  """"""
+  id: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  priceUSDCents: Int!
+
+  """"""
+  thumbnailURL: String
+
+  """"""
+  purchased: Boolean!
+}
+
+""""""
+input GetToursInput {
+  """"""
+  recordsPerPage: Int
+
+  """"""
+  pageNumber: Int
+}
+
+""""""
+type GetToursResponse implements PaginatedListResponse {
+  """"""
+  totalPages: Int!
+
+  """"""
+  totalRecordsCount: Int!
+
+  """"""
+  tours: [Tour!]!
+}
+
+""""""
+interface PaginatedListResponse {
+  """"""
+  totalPages: Int!
+
+  """"""
+  totalRecordsCount: Int!
+}
+
+""""""
+input GetCurrentUserInput {
+  """dummy field."""
+  _: Boolean
+}
+
+""""""
+type User {
+  """"""
+  id: ID!
+
+  """"""
+  email: String!
+
+  """"""
+  name: String
+
+  """"""
+  purchasedTours: [Tour!]!
+}
+
+""""""
+type Mutation {
+  """
+  TODO add explanation
+  dummy resolver to allow empty type
+  """
+  _: Boolean
+
+  """"""
+  purchaseTours(input: PurchaseToursInput!): PurchaseToursResponse!
+
+  """"""
+  logInWithEmail(input: LogInWithEmailInput!): LogInWithEmailResponse!
+
+  """"""
+  signUpWithEmail(input: SignUpWithEmailInput!): SignUpWithEmailResponse!
+}
+
+""""""
+input PurchaseToursInput {
+  """"""
+  tourIDs: [ID!]!
+}
+
+""""""
+type PurchaseToursResponse implements MutationResponse {
+  """"""
+  purchasedTours: [Tour!]
+
+  """"""
+  error: Error
+}
+
+""""""
+interface MutationResponse {
+  """"""
+  error: Error
+}
+
+""""""
+type Error {
+  """"""
+  id: ID!
+
+  """"""
+  type: String!
+
+  """"""
+  title: String!
+
+  """"""
+  message: String!
+
+  """"""
+  helpText: String
+}
+
+""""""
+input LogInWithEmailInput {
+  """"""
+  email: String!
+
+  """"""
+  password: String!
+}
+
+""""""
+type LogInWithEmailResponse implements MutationResponse {
+  """"""
+  jwt: String
+
+  """"""
+  error: Error
+}
+
+""""""
+input SignUpWithEmailInput {
+  """"""
+  email: String!
+
+  """"""
+  password: String!
+
+  """"""
+  name: String!
+}
+
+""""""
+type SignUpWithEmailResponse implements MutationResponse {
+  """"""
+  jwt: String
+
+  """"""
+  error: Error
+}
+
+"""Use JavaScript Date object for date/time fields."""
+scalar DateTime
+
+""""""
+enum CacheControlScope {
+  """"""
+  PUBLIC
+
+  """"""
+  PRIVATE
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+

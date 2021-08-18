@@ -6,8 +6,6 @@ import { getLimitAndSkipFromPagination } from '../../../utils/getLimitAndSkipFro
 
 type GetToursArgs = {
   input: {
-    to: Date,
-    from: Date,
     recordsPerPage?: number,
     pageNumber?: number,
   },
@@ -24,30 +22,16 @@ export async function getTours(
   { input }: GetToursArgs,
   ctx: any,
 ): Promise<GetToursResponse> {
-  const { to, from, recordsPerPage = 25, pageNumber = 1, type } = input;
+  const { recordsPerPage = 25, pageNumber = 1 } = input;
 
   if (pageNumber < 1) {
     return new UserInputError('Page number should be 1 or more');
   }
 
-  if (recordsPerPage < 1 || recordsPerPage > 200) {
+  if (recordsPerPage < 1 || recordsPerPage > 50) {
     return new UserInputError(
-      'Records per page should be between 1 and 200 (both inclusive)',
+      'Records per page should be between 1 and 50 (both inclusive)',
     );
-  }
-
-  const criteria: any = {};
-
-  if (to) {
-    criteria.date = { $lte: to };
-  }
-
-  if (from) {
-    criteria.date = { ...criteria.date, $gte: from };
-  }
-
-  if (type) {
-    criteria.type = type;
   }
 
   const { skip, limit } = getLimitAndSkipFromPagination({
@@ -56,12 +40,12 @@ export async function getTours(
   });
 
   const [tours, totalRecordsCount] = await Promise.all([
-    ctx.db.Tour.query(criteria)
+    ctx.db.Tour.query({})
       .skip(skip)
       .limit(limit)
       .lean()
       .sort({ date: 1 }),
-    ctx.db.Tour.count(criteria),
+    ctx.db.Tour.count({}),
   ]);
 
   return {
@@ -77,8 +61,6 @@ getTours.typeDef = /* GraphQL */ `
   }
 
   input GetToursInput {
-    to: DateTime
-    from: DateTime
     recordsPerPage: Int
     pageNumber: Int
   }

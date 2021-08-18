@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const AccountView: React.FC = () => {
   return (
     <Wrapper>
-      <h1>Tasks</h1>
+      <h1>Challenge 2</h1>
       <p>Display the grid of tours the user has purchased.</p>
       <p>
         Hint: Use <strong>getCurrentUser query</strong>. The{" "}

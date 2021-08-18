@@ -11,7 +11,7 @@ import { createStore } from "./store";
 import { AppGlobalStyle } from "./styles/AppGlobalStyle";
 
 const history = createBrowserHistory();
-const { store, persistor } = createStore();
+const { store, persistor } = createStore(history);
 
 const App: React.FC = () => {
   const [apolloClient, setApolloClient] = useState<ApolloClient<any> | null>(

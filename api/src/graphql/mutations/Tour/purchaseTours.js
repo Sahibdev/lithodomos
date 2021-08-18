@@ -16,14 +16,14 @@ type PurchaseToursResponse = {
   },
 };
 
+
 export async function purchaseTours(
   _: void,
   { input }: PurchaseToursArgs,
   ctx: any,
 ): Promise<PurchaseToursResponse> {
+  // only logged in users can purchase
   const userIDStr = ctx.user?.id;
-
-  console.log('ctx.user:', ctx.user);
 
   if (!userIDStr) {
     return {
@@ -39,7 +39,7 @@ export async function purchaseTours(
   const { tourIDs } = input;
 
   try {
-    // find the user record matching the email
+    // query the tours matching the tourIDs from mongoDB
     const tours = await ctx.db.Tour.find(
       {
         _id: { $in: tourIDs.map(idStr => new mongoose.Types.ObjectId(idStr)) },
@@ -47,6 +47,7 @@ export async function purchaseTours(
       ctx,
     );
 
+    // add the tourIDs to the user doc
     await ctx.db.User.findByIDAndUpdate(
       userObjID,
       {
@@ -57,11 +58,12 @@ export async function purchaseTours(
       ctx,
     );
 
+    // return purchased tours
     return { purchasedTours: tours, error: null };
   } catch (error) {
     return {
       purchasedTours: null,
-      error: { message: 'Unknown error' },
+      error: { message: error.message },
     };
   }
 }

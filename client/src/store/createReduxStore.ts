@@ -1,10 +1,13 @@
+import createSagaMiddleware from 'redux-saga';
 import { createStore, applyMiddleware, compose } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { createLogger } from "redux-logger";
 import { env } from "../config/env";
 import { rootReducer } from "./rootReducer";
+import { rootSaga } from './rootSaga';
 import { transforms } from "./transforms";
+import { SagasContext } from './types';
 
 declare global {
   interface Window {
@@ -14,8 +17,11 @@ declare global {
 
 let _store: any;
 let _persistor: any;
+let _context: SagasContext;
 
-export function createReduxStore() {
+export function createReduxStore(context: SagasContext) {
+  _context = context;
+
   const persistedReducer: any = persistReducer(
     {
       version: env.REDUX_PERSIST_VERSION,
@@ -27,6 +33,11 @@ export function createReduxStore() {
     // @ts-ignore
     rootReducer
   );
+
+  const sagaMiddleware = createSagaMiddleware({
+    context: _context,
+    onError: console.error,
+  });
 
   // Refer to: https://extension.remotedev.io/#usage
   const reduxDevToolsExtensionCompose =
@@ -40,7 +51,10 @@ export function createReduxStore() {
 
   const logger = createLogger({});
 
-  const middleware = [env.IS_DEVELOPMENT && logger].filter(Boolean);
+  const middleware = [
+    sagaMiddleware,
+    env.IS_DEVELOPMENT && logger
+  ].filter(Boolean);
 
   // @ts-ignore
   const enhancer = composeEnhancers(applyMiddleware(...middleware));
@@ -48,6 +62,8 @@ export function createReduxStore() {
   _store = createStore(persistedReducer, enhancer);
 
   _persistor = persistStore(_store);
+
+  sagaMiddleware.run(rootSaga);
 
   return {
     store: _store,
