@@ -52,7 +52,7 @@ There are two projects. These projects are set up similar to the Lithodomos weba
 
 There are 3 challenges. 
 
-1) Coding challenge #1
+1) Coding challenge #1 [React]
 
 	Display the list of tours returned from the `getTours` graphql query as a grid below the Hero image.
 	- Use `getTours` query. The Tours.tsx file is already wired up.
@@ -73,7 +73,7 @@ There are 3 challenges.
 
 	Hint: You may need to refetch the tours once a user purchases a tour.
 
-2) Coding challenge #2
+2) Coding challenge #2 [React]
 
 	On the Account page (you'll see the `Account` link on the navbar if the user is logged in), display the list of tours the currently logged in user has purchased.
 	
@@ -82,7 +82,9 @@ There are 3 challenges.
 	Hint: Use `getCurrentUser` query to get the purchasedTours. The `purchasedTours` field should return the purchased tours. Make sure to run `yarn generate-gql-types` after adding the query to generate typescrypt definitions from the graphql types.
 
 
-3) Create a new query which returns the users who have purchased at least one tour.
+3) Coding challenge #3 [Node/GraphQL]
+
+       Create a new query which returns the users who have purchased at least one tour.
 
 	```
 	getUsersWithPurchases(input: GetUsersWithPurchasesInput!): GetUsersWithPurchasesResponse!
