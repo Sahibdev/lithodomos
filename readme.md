@@ -34,18 +34,19 @@ There are two projects. These projects are set up similar to the Lithodomos weba
 ###  API
 
 1) cd into api directory
-2) run `yarn` to install npm packages
-3) start mongodb if not already running and point to a local data file. (eg: mongod --dbpath ./db)
-4) run `yarn seedData` to add seedData to the database (this will add 10 records to the db named `test`. It will drop the `test` db if it is already available.)
-5) run `yarn start` to start the API. The API will run on localhost:3000/graphql (if you browse to localhost:3000 in your browser, it will load the playground for you to explore the api)
+2) Run `yarn` to install npm packages
+3) Start mongodb if not already running and point to a local data file. (eg: mongod --dbpath ./db)
+4) Run `yarn seedData` to add seedData to the database (this will add 10 records to the db named `test`. It will drop the `test` db if it is already available.)
+5) Create a new .env file in the root of the `api` directory by duplicating the `.env.example` file.
+6) Tun `yarn start` to start the API. The API will run on localhost:3000/graphql (if you browse to localhost:3000 in your browser, it will load the playground for you to explore the api)
 
 
 ### Client
 
 1) cd into the client directory
-2) run `yarn` to install npm packages
-3) run `yarn start` to start the Client
-4) if you add/modify a graphql query in the Client, make sure to run `yarn generate-gql-types` to add the typescript definitions
+2) Run `yarn` to install npm packages
+3) Run `yarn start` to start the Client
+4) If you add/modify a graphql query in the Client, make sure to run `yarn generate-gql-types` to add the typescript definitions
 
 
 ## Challenges
@@ -85,8 +86,9 @@ There are 3 challenges.
 3) Coding challenge #3 [Node/GraphQL]
 
        Create a new query which returns the users who have purchased at least one tour.
+       
 
-	```
+	```graphql
 	getUsersWithPurchases(input: GetUsersWithPurchasesInput!): GetUsersWithPurchasesResponse!
 
 	input GetUsersWithPurchasesInput {
