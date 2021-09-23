@@ -27,6 +27,7 @@ const Container = styled.div`
   background: ${colors.secondaryBackground};
   position: fixed;
   width: 100%;
+  z-index: 4;
 `;
 
 const Wrapper = styled.div`
