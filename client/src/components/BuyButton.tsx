@@ -63,15 +63,8 @@ const StyledButton = styled.button`
       }
 `;
 
-const StyledNotActiveButton = styled.button`
+const StyledNotActiveButton = styled(StyledButton)`
     background: rgb(80, 80, 80);
-    color: rgb(255, 255, 255);
-    width: 100%;
-    cursor: pointer;
-    outline: none;
-    padding: 8px;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 5px;
 `;
 
 const StyledStyledError = styled.p`
